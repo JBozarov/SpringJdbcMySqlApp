@@ -5,9 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bozarov.springjdbc.entity.User;
 import com.bozarov.springjdbc.repository.UserRepository;
 
 @RestController
@@ -17,14 +20,24 @@ public class UserController {
 	@Autowired
 	UserRepository userRepository; 
 	
+	@PostMapping("/newuser")
+	public String createUser(@RequestBody User user) {
+		System.out.println(user.toString());
+		return userRepository.createUser(user); 
+	}
+	
 	@GetMapping("/{id}")
 	public String getSingleUsername(@PathVariable String id ) {
-		System.out.println(id);
 		return userRepository.getSingleUsername(id);
 	}
 	
 	@GetMapping("/usernames")
 	public List<String> getAllUserNames() {
 		return userRepository.getAllUserNames(); 
+	}
+	
+	@GetMapping("/deleteuser/{id}")
+	public String deleteUser(@PathVariable String id) {
+		return userRepository.deleteUser(id);
 	}
 }
