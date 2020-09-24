@@ -42,7 +42,7 @@ public class UserRepository implements CrudRepository {
 	public List<User> getAllUsers() {
 		List<User> allUsers = new ArrayList<>(); 
 		String sql = "select * from users"; 
-		allUsers.addAll(jdbcTemplate.queryForList(sql, User.class)); 
+		allUsers = jdbcTemplate.query(sql, new UserRowMapper()); 
 		return allUsers; 
 	}
 
