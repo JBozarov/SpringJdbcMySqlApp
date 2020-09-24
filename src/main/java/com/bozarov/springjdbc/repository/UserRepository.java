@@ -78,6 +78,15 @@ public class UserRepository implements CrudRepository {
 		return deletedUserName + " is deleted";
 	}
 
+	@Override
+	public User updateUser(String id, User oldUser) {
+		User updatedUser = null; 
+		String sql = "UPDATE users SET email=?, name=? where id=?"; 
+		jdbcTemplate.update(sql, oldUser.getEmail(), oldUser.getName(), id); 
+		updatedUser = getUser(id); 
+		return updatedUser;
+	}
+
 
 
 

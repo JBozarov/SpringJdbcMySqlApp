@@ -54,6 +54,11 @@ public class UserController {
 		return userRepository.deleteUser(id);
 	}
 	
-//	@PutMapping("/updateUser/{id}")
-//	public String 
+	@PutMapping("/updateUser/{id}")
+	public User updateUser(@PathVariable String id, @RequestBody User oldUser) {
+		return userRepository.updateUser(id, oldUser); 
+	}
+	
+	
+	
 }

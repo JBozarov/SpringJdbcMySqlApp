@@ -18,9 +18,7 @@ public interface CrudRepository {
 
 	String deleteUser(String id);
 
-	
-
-	
+	User updateUser(String id, User oldUser);
 
 	 
 }
