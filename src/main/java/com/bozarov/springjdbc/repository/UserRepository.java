@@ -28,12 +28,13 @@ public class UserRepository implements CrudRepository {
 		return createdUser;
 	}
 	
-	
+	//implementation => https://mkyong.com/spring/spring-jdbctemplate-querying-examples/
 	@Override
 	public User getUser(String id) {
 		User foundUser = null; 
 		String sql = "select * from users where id=?"; 
-		foundUser = jdbcTemplate.queryForObject(sql, new Object[] {id}, User.class); 
+		foundUser = jdbcTemplate.queryForObject(sql, new Object[] {id}, new UserRowMapper()); 
+		System.out.println("found user is " + foundUser.toString());
 		return foundUser; 
 	}
 	
