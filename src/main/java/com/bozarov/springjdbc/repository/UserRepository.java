@@ -13,16 +13,38 @@ import com.bozarov.springjdbc.entity.User;
 public class UserRepository implements CrudRepository {
 	
 	@Autowired
-	JdbcTemplate jdbcTemplate; 
-
+	JdbcTemplate jdbcTemplate;
+	
 	@Override
-	public List<String> getAllUserNames() {
-		List<String> usernameList = new ArrayList<>(); 
-		usernameList.addAll(jdbcTemplate.queryForList("select name from users;", String.class)); 
-		return usernameList; 
+	public User createUser(User user) {
+		User createdUser = null; 
+		try {
+			String sql = "INSERT INTO users(id, email, name) values (?, ?, ?)"; 
+			jdbcTemplate.update(sql, user.getId(), user.getEmail(), user.getName()); 
+			createdUser = getUser(user.getId()); 
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return createdUser;
+	}
+	
+	
+	@Override
+	public User getUser(String id) {
+		User foundUser = null; 
+		String sql = "select * from users where id=?"; 
+		foundUser = jdbcTemplate.queryForObject(sql, new Object[] {id}, User.class); 
+		return foundUser; 
+	}
+	
+	@Override
+	public List<User> getAllUsers() {
+		List<User> allUsers = new ArrayList<>(); 
+		String sql = "select * from users"; 
+		allUsers.addAll(jdbcTemplate.queryForList(sql, User.class)); 
+		return allUsers; 
 	}
 
-	
 	// Make sure know the differences between query for single row and query for multiple rows
 	// Also make sure query returns one value or multiple values in single row:
 	// https://mkyong.com/spring/spring-jdbctemplate-querying-examples/
@@ -37,6 +59,14 @@ public class UserRepository implements CrudRepository {
 		}
 		return result; 
 	}
+	
+		
+	@Override
+	public List<String> getAllUserNames() {
+		List<String> usernameList = new ArrayList<>(); 
+		usernameList.addAll(jdbcTemplate.queryForList("select name from users;", String.class)); 
+		return usernameList; 
+	}
 
 
 	@Override
@@ -49,18 +79,8 @@ public class UserRepository implements CrudRepository {
 	}
 
 
-	@Override
-	public String createUser(User user) {
-		String returnValue; 
-		System.out.println("line 55 repo " + user.toString());
-		try {
-			String sql = "INSERT INTO users(id, email, name) values (?, ?, ?)"; 
-			jdbcTemplate.update(sql, user.getId(), user.getEmail(), user.getName()); 
-			returnValue = user.getName();
-		} catch (Exception e) {
-			returnValue = "Error in creating user"; 
-		}
-		return returnValue;
-	}
+
+
+	
 
 }

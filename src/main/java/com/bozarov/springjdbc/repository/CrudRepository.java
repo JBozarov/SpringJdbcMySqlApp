@@ -6,11 +6,21 @@ import com.bozarov.springjdbc.entity.User;
 
 public interface CrudRepository {
 	
-	public List<String> getAllUserNames();
-
+	User createUser(User user);
+	
+	User getUser(String id);
+	
+	List<User> getAllUsers();
+	
 	String getSingleUsername(String id);
+	
+	public List<String> getAllUserNames();
 
 	String deleteUser(String id);
 
-	String createUser(User user); 
+	
+
+	
+
+	 
 }

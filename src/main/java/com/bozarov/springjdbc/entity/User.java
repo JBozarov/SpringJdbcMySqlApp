@@ -2,7 +2,7 @@ package com.bozarov.springjdbc.entity;
 
 public class User {
 
-	private int id; 
+	private String id; 
 	private String email; 
 	private String name;
 	
@@ -12,7 +12,7 @@ public class User {
 	}
 
 
-	public User(int id, String email, String name) {
+	public User(String id, String email, String name) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -20,12 +20,12 @@ public class User {
 	}
 
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
